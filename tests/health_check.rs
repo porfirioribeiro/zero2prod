@@ -1,19 +1,14 @@
-//! tests/health_check.rs
 use std::net::TcpListener;
 
-// `actix_rt::test` is the testing equivalent of `actix_web::main`.
-// It also spares you from having to specify the `#[test]` attribute.
-//
-// Use `cargo add actix-rt --dev --vers 2` to add `actix-rt`
-// under `[dev-dependencies]` in Cargo.toml
-//
-// You can inspect what code gets generated using
-// `cargo expand --test health_check` (<- name of the test file)
+use actix_web::client::Client;
+
+use zero2prod::utils::ClientResponseEx;
+
 #[actix_rt::test]
 async fn health_check_works() {
     // Arrange
     let address = spawn_app();
-    let client = reqwest::Client::new();
+    let client = Client::default();
 
     // Act
     let response = client
